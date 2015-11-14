@@ -58,7 +58,7 @@ In the example we read coordinate frames from an existing XTC trajectory::
   import numpy as np
   from libxdrfile2 import xdrfile_open, xdrfile_close, read_xtc_natoms, read_xtc, DIM, exdrOK
   xtc = 'md.xtc'
-  
+
   # get number of atoms
   natoms = read_xtc_natoms(xtc)
 
@@ -110,7 +110,7 @@ A number of symbols are exported; they all start with the letters
           Success of xdr file read/write operation.
 
 .. data:: exdrCLOSE
- 
+
           xdr file is closed
 
 .. data:: exdrENDOFFILE
@@ -143,9 +143,9 @@ to access xdr files such as XTC or TRR trajectories.
 
 .. function:: xdrfile_close(XDRFILE) -> status
 
-              Close the xdrfile pointed to by *XDRFILE*. 
+              Close the xdrfile pointed to by *XDRFILE*.
 
-              .. Warning:: Closing an already closed file will lead to a 
+              .. Warning:: Closing an already closed file will lead to a
                            crash with a double-free pointer error.
 
 XTC functions
@@ -168,15 +168,15 @@ The advantage of XTC over TRR is its significantly reduced size.
                 *fn*
                    file name of an xtc file
 
-              :Raises: :exc:`IOError` if the supplied filed is not a XTC 
+              :Raises: :exc:`IOError` if the supplied filed is not a XTC
                        or if it is not readable.
 
 .. function:: read_xtc_numframes(fn) -> (numframes, offsets)
 
-              Read through the whole trajectory headers to obtain the total number of frames. 
+              Read through the whole trajectory headers to obtain the total number of frames.
               The process is speeded up by reading frame headers for the amount of data in the frame,
               and then skipping directly to the next header. An array of frame offsets is also
-              returned, which can later be used to seek direcly to arbitrary frames in the trajectory. 
+              returned, which can later be used to seek direcly to arbitrary frames in the trajectory.
 
               :Arguments:
                 *fn*
@@ -189,7 +189,7 @@ The advantage of XTC over TRR is its significantly reduced size.
                   *offsets*
                      a numpy array of int64 recording the starting byte offset of each frame
 
-              :Raises: :exc:`IOError` if the supplied filed is not a XTC 
+              :Raises: :exc:`IOError` if the supplied filed is not a XTC
                        or if it is not readable.
 
 .. function:: read_xtc(XDRFILE, box, x) -> (status, step, time, precision)
@@ -230,7 +230,7 @@ The advantage of XTC over TRR is its significantly reduced size.
                 *time*
                    time step in ps
                 *box*
-                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains 
+                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains
                    the unit cell box vectors
                 *x*
                    numpy ``array((natoms, DIM),dtype=nump.float32)``
@@ -238,14 +238,14 @@ The advantage of XTC over TRR is its significantly reduced size.
                 *precision*
                    precision of the lossy xtc format (typically 1000.0)
 
-              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*`` 
+              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*``
                         constants under `Status symbols`_ for other values)
 
 TRR functions
 ~~~~~~~~~~~~~
 
-TRR is the Gromacs_ native full-feature trajectory storage format. It can contain position 
-coordinates, velocities and forces, and the lambda value for free energy perturbation 
+TRR is the Gromacs_ native full-feature trajectory storage format. It can contain position
+coordinates, velocities and forces, and the lambda value for free energy perturbation
 calculations. Velocities and forces are optional in the sense that they can be all zero.
 
 .. function:: read_trr_natoms(fn) -> natoms
@@ -261,10 +261,10 @@ calculations. Velocities and forces are optional in the sense that they can be a
 
 .. function:: read_trr_numframes(fn) -> (numframes, offsets)
 
-              Read through the whole trajectory headers to obtain the total number of frames. 
+              Read through the whole trajectory headers to obtain the total number of frames.
               The process is speeded up by reading frame headers for the amount of data in the frame,
               and then skipping directly to the next header. An array of frame offsets is also
-              returned, which can later be used to seek direcly to arbitrary frames in the trajectory. 
+              returned, which can later be used to seek direcly to arbitrary frames in the trajectory.
 
               :Arguments:
                 *fn*
@@ -302,7 +302,7 @@ calculations. Velocities and forces are optional in the sense that they can be a
               :Returns:
                 a tuple containing:
                   *status*
-                     integer status (0 = exdrOK), see the ``libxdrfile2.exdr*`` constants 
+                     integer status (0 = exdrOK), see the ``libxdrfile2.exdr*`` constants
                      under `Status symbols`_ for other values)
                   *step*
                      simulation step
@@ -331,7 +331,7 @@ calculations. Velocities and forces are optional in the sense that they can be a
                 *lambda*
                    free energy lambda value (typically 0.0)
                 *box*
-                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains 
+                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains
                    the unit cell box vectors
                 *x*
                    numpy ``array((natoms, DIM),dtype=nump.float32)``
@@ -347,8 +347,8 @@ calculations. Velocities and forces are optional in the sense that they can be a
                    either one of *x*, *v*, or *f* can now be set as a natom,0-DIM
                    numpy ``array((natom, 0),dtype=nump.float32)``. This will cause the
                    corresponding property to be skipped when writing to file.
- 
-              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*`` 
+
+              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*``
                         constants under `Status symbols`_ for other values)
 
 
