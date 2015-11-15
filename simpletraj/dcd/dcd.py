@@ -17,23 +17,24 @@
 #
 
 
-import os, errno
+import os
+import errno
+import types
 import numpy as np
 
-class DCDReader():
+
+class DCDReader( object ):
     # units = { 'time': 'AKMA', 'length': 'Angstrom' }
     def __init__( self, dcdfilename ):
-        self.dcdfilename = dcdfilename
-        self.filename = self.dcdfilename
         self.dcdfile = None  # set right away because __del__ checks
 
         # Issue #32 (MDanalysis): segfault if dcd is 0-size
         # Hack : test here... (but should be fixed in dcd.c)
-        stats = os.stat( self.dcdfilename )
+        stats = os.stat( dcdfilename )
         if stats.st_size == 0:
             raise IOError( errno.ENODATA, "DCD file is zero size", dcdfilename )
 
-        self.dcdfile = open( dcdfilename, 'rb' )
+        self.dcdfile = dcdfilename
         self.numatoms = 0
         self.numframes = 0
         self.fixed = 0
@@ -73,19 +74,28 @@ class DCDReader():
         return self.numframes
     def close( self ):
         self._finish_dcd_read()
-        self.dcdfile.close()
         self.dcdfile = None
     def __del__( self ):
         if not self.dcdfile is None:
             self.close()
 
+
 # Add the c functions to their respective classes so they act as class methods
-import _dcdmodule
-import new
-DCDReader._read_dcd_header = new.instancemethod( _dcdmodule.__read_dcd_header, None, DCDReader )
-DCDReader._read_next_frame = new.instancemethod( _dcdmodule.__read_next_frame, None, DCDReader )
-DCDReader._jump_to_frame = new.instancemethod( _dcdmodule.__jump_to_frame, None, DCDReader )
-DCDReader._reset_dcd_read = new.instancemethod( _dcdmodule.__reset_dcd_read, None, DCDReader )
-DCDReader._finish_dcd_read = new.instancemethod( _dcdmodule.__finish_dcd_read, None, DCDReader )
-DCDReader._read_timeseries = new.instancemethod( _dcdmodule.__read_timeseries, None, DCDReader )
-del( _dcdmodule )
+from . import _dcdmodule
+
+try:
+    import new
+    DCDReader._read_dcd_header = new.instancemethod( _dcdmodule.__read_dcd_header, None, DCDReader )
+    DCDReader._read_next_frame = new.instancemethod( _dcdmodule.__read_next_frame, None, DCDReader )
+    DCDReader._jump_to_frame = new.instancemethod( _dcdmodule.__jump_to_frame, None, DCDReader )
+    DCDReader._reset_dcd_read = new.instancemethod( _dcdmodule.__reset_dcd_read, None, DCDReader )
+    DCDReader._finish_dcd_read = new.instancemethod( _dcdmodule.__finish_dcd_read, None, DCDReader )
+    DCDReader._read_timeseries = new.instancemethod( _dcdmodule.__read_timeseries, None, DCDReader )
+    del( _dcdmodule )
+except ImportError:
+    DCDReader._read_dcd_header = lambda self: _dcdmodule._read_dcd_header( self )
+    DCDReader._read_next_frame = lambda self, x, y, z, unitcell, skip: _dcdmodule._read_next_frame( self, x, y, z, unitcell, skip )
+    DCDReader._jump_to_frame = lambda self, frame: _dcdmodule._jump_to_frame( self, frame )
+    DCDReader._reset_dcd_read = lambda self: _dcdmodule._reset_dcd_read( self )
+    DCDReader._finish_dcd_read = lambda self: _dcdmodule._finish_dcd_read( self )
+    DCDReader._read_timeseries = lambda self: _dcdmodule._read_timeseries( self )

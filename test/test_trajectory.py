@@ -70,7 +70,6 @@ class LibDcdTestCase( unittest.TestCase ):
     def test_dcd( self ):
         dcd_file = os.path.join( DATA_DIR, "ala3.dcd" )
         dcd = DCDReader( dcd_file )
-        return
         natoms = dcd.numatoms
         numframes = dcd.numframes
         first_coord = dcd[ 0 ][ 0 ]
