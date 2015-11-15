@@ -8,6 +8,7 @@ python -m unittest test_trajectory.LibXdrTestCase
 python -m unittest test_trajectory.LibXdrTestCase.test_xdr
 """
 
+from __future__ import absolute_import
 import os
 import sys
 import unittest
@@ -16,9 +17,10 @@ DIR = os.path.split( os.path.abspath( __file__ ) )[0]
 DATA_DIR = os.path.join( os.path.split( DIR )[0], "data" )
 
 import numpy as np
-import simpletraj.xdrfile.libxdrfile2 as libxdrfile2
+
 from simpletraj.dcd.dcd import DCDReader
 import netCDF4 as netcdf
+from simpletraj.xdrfile import _libxdrfile2 as libxdrfile2
 
 
 class LibXdrTestCase( unittest.TestCase ):

@@ -1,4 +1,5 @@
 
+from __future__ import absolute_import
 from __future__ import print_function
 
 import os
@@ -8,9 +9,9 @@ import collections
 import numpy as np
 import cPickle as pickle
 
-import dcd.dcd as dcd
+from .dcd import dcd as dcd
 import netCDF4 as netcdf
-import xdrfile.libxdrfile2 as libxdrfile2
+from .xdrfile import _libxdrfile2 as libxdrfile2
 
 
 def get_xtc_parts( name, directory ):

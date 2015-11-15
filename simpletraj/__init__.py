@@ -1,6 +1,6 @@
 
-__all__ = [ "libxdrfile2", "dcd", "trajectory" ]
+from __future__ import absolute_import
 
-import xdrfile.libxdrfile2 as libxdrfile2
-import dcd.dcd as dcd
-import trajectory
+from . import trajectory
+
+__all__ = [ "trajectory" ]
