@@ -1,4 +1,6 @@
 
+from __future__ import print_function
+
 import os
 import re
 import array
@@ -73,7 +75,7 @@ class TrajectoryCache( object ):
         if path not in self.cache:
             self.add( path, pathList )
         elif pathList != self.parts[ path ]:
-            print "pathList changed, rebuilding"
+            print( "pathList changed, rebuilding" )
             del self.cache[ path ]
             self.add( path, pathList )
         else:
@@ -83,7 +85,7 @@ class TrajectoryCache( object ):
                 if mtime[ partPath ] < os.path.getmtime( partPath ):
                     updateRequired = True
             if updateRequired:
-                print "file modified, updating"
+                print( "file modified, updating" )
                 self.cache[ path ].update( True )
         return self.cache[ path ]
 
@@ -205,11 +207,11 @@ class XdrTrajectory( Trajectory ):
         mtime_offset = isfile_offset and os.path.getmtime( self.offset_file )
         mtime_xdr = os.path.getmtime( self.file_name )
         if not force and isfile_offset and mtime_offset >= mtime_xdr:
-            print "found usable offset file"
+            print( "found usable offset file" )
             with open( self.offset_file, 'rb' ) as fp:
                 self.numframes, self.offsets = pickle.load( fp )
         else:
-            print "create offset file"
+            print( "create offset file" )
             self.numframes, self.offsets = self._read_numframes(
                 self.file_name
             )
@@ -223,7 +225,7 @@ class XdrTrajectory( Trajectory ):
         status, step, ftime = self._read(
             self.xdr_fp, self.box, self.x
         )
-        # print status, step, ftime, prec
+        # print( status, step, ftime, prec )
         self.x *= 10  # convert to angstrom
         self.box *= 10  # convert to angstrom
         self.time = ftime
