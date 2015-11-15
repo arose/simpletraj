@@ -8,6 +8,7 @@ import sys
 import array
 import collections
 import numpy as np
+import warnings
 try:
     import cPickle as pickle
 except ImportError:
@@ -16,9 +17,20 @@ except ImportError:
 if sys.version_info > (3,):
     long = int
 
-from .dcd import dcd as dcd
-import netCDF4 as netcdf
-from .xdrfile import _libxdrfile2 as libxdrfile2
+try:
+    from .dcd import dcd as dcd
+except ImportError:
+    warnings.warn("dcd not available, some functions may not work!")
+
+try:
+    import netCDF4 as netcdf
+except ImportError:
+    warnings.warn("netcdf not available, some functions may not work!")
+
+try:
+    from .xdrfile import _libxdrfile2 as libxdrfile2
+except ImportError:
+    warnings.warn("libxdrfile2 not available, some functions may not work!")
 
 
 def get_xtc_parts( name, directory ):

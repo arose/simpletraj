@@ -62,5 +62,5 @@ if __name__ == '__main__':
             ),
         ],
         setup_requires = [ "numpy" ],
-        install_requires = [ "numpy", "netCDF4" ],
+        # install_requires = [ "numpy", "netCDF4" ],
     )
