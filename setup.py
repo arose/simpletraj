@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Distutils-based setup script for trajectory file reading modules.
+Setup script for trajectory file reading modules.
 
 A working installation of NumPy <http://numpy.scipy.org> is required.
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
         version = "0.1",
         license = "GPL2",
         url = "https://github.com/arose/simpletraj",
-        packages = [ "simpletraj" ],
+        packages = [ "simpletraj", "simpletraj.xdrfile", "simpletraj.dcd" ],
         ext_modules = [
             Extension(
                 "simpletraj/xdrfile._libxdrfile2",
