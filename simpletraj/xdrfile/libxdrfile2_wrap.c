@@ -3122,7 +3122,11 @@ PyObject * my_read_xtc_numframes(char *fn) {
       return 0;
     }
     /* From http://web.archive.org/web/20130304224839/http://blog.enthought.com/python/numpy/simplified-creation-of-numpy-arrays-from-pre-allocated-memory/ */
-    PyArray_BASE(npoffsets) = PyCObject_FromVoidPtr(*offsets, free);
+    #if PY_MAJOR_VERSION < 3
+      PyArray_BASE(npoffsets) = PyCObject_FromVoidPtr(*offsets, free);
+    #else
+      PyArray_BASE(npoffsets) = PyCapsule_New(*offsets, NULL, NULL);
+    #endif
     PyObject *tuple = PyTuple_New(2);
     PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong((long)numframes));
     PyTuple_SET_ITEM(tuple, 1, npoffsets);
@@ -3161,7 +3165,11 @@ PyObject * my_read_trr_numframes(char *fn) {
       return 0;
     }
     /* From http://web.archive.org/web/20130304224839/http://blog.enthought.com/python/numpy/simplified-creation-of-numpy-arrays-from-pre-allocated-memory/ */
-    PyArray_BASE(npoffsets) = PyCObject_FromVoidPtr(*offsets, free);
+    #if PY_MAJOR_VERSION < 3
+      PyArray_BASE(npoffsets) = PyCObject_FromVoidPtr(*offsets, free);
+    #else
+      PyArray_BASE(npoffsets) = PyCapsule_New(*offsets, NULL, NULL);
+    #endif
     PyObject *tuple = PyTuple_New(2);
     PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong((long)numframes));
     PyTuple_SET_ITEM(tuple, 1, npoffsets);
@@ -3261,9 +3269,13 @@ PyObject * my_read_xtc(XDRFILE *xd, matrix box, int natoms, int _DIM, float *x) 
     if (PyDict_Check(    py_obj)) return "dict"        ;
     if (PyList_Check(    py_obj)) return "list"        ;
     if (PyTuple_Check(   py_obj)) return "tuple"       ;
-    if (PyFile_Check(    py_obj)) return "file"        ;
+    #if PY_MAJOR_VERSION < 3
+      if (PyFile_Check(    py_obj)) return "file"        ;
+    #endif
     if (PyModule_Check(  py_obj)) return "module"      ;
-    if (PyInstance_Check(py_obj)) return "instance"    ;
+    #if PY_MAJOR_VERSION < 3
+      if (PyInstance_Check(py_obj)) return "instance"    ;
+    #endif
 
     return "unkown type";
   }
