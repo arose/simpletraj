@@ -7,5 +7,6 @@
 *.offsets
 
 build/*
+dist/*
 *.egg-info
 *.so
