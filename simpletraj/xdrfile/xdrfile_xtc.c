@@ -1,14 +1,14 @@
-/* -*- mode: c; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- 
+/* -*- mode: c; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
  * $Id$
  *
  * Copyright (c) Erik Lindahl, David van der Spoel 2003,2004.
  * Copyright (c) Manuel Melo <manuel.nuno.melo@gmail.com> 2013,2014.
- * Coordinate compression (c) by Frans van Hoesel. 
+ * Coordinate compression (c) by Frans van Hoesel.
  * XTC/TRR seeking and indexing (c) Manuel Melo.
  *
  *    This file is part of libxdrfile2.
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -24,12 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
  * USA.
  */
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "xdrfile.h"
 #include "xdrfile_xtc.h"
-	
+
 #define MAGIC 1995
 
 enum { FALSE, TRUE };
@@ -37,7 +37,7 @@ enum { FALSE, TRUE };
 static int xtc_header(XDRFILE *xd,int *natoms,int *step,float *time,mybool bRead)
 {
 	int result,magic,n=1;
-	
+
 	/* Note: read is same as write. He he he */
 	magic  = MAGIC;
 	if ((result = xdrfile_write_int(&magic,n,xd)) != n)
@@ -55,7 +55,7 @@ static int xtc_header(XDRFILE *xd,int *natoms,int *step,float *time,mybool bRead
 		return exdrINT;
 	if ((result = xdrfile_write_float(time,n,xd)) != n)
 		return exdrFLOAT;
-	
+
 	return exdrOK;
 }
 
@@ -63,22 +63,22 @@ static int xtc_coord(XDRFILE *xd,int *natoms,matrix box,rvec *x,float *prec,
 					 mybool bRead)
 {
 	int result;
-    
+
 	/* box */
 	result = xdrfile_read_float(box[0],DIM*DIM,xd);
 	if (DIM*DIM != result)
 		return exdrFLOAT;
-	else 
+	else
 		{
 			if (bRead)
 				{
-					result = xdrfile_decompress_coord_float(x[0],natoms,prec,xd); 
+					result = xdrfile_decompress_coord_float(x[0],natoms,prec,xd);
 					if (result != *natoms)
 						return exdr3DX;
 				}
 			else
 				{
-					result = xdrfile_compress_coord_float(x[0],*natoms,*prec,xd); 
+					result = xdrfile_compress_coord_float(x[0],*natoms,*prec,xd);
 					if (result != *natoms)
 						return exdr3DX;
 				}
@@ -91,13 +91,13 @@ int read_xtc_natoms(char *fn,int *natoms)
 	XDRFILE *xd;
 	int step,result;
 	float time;
-	
+
 	xd = xdrfile_open(fn,"r");
 	if (NULL == xd)
 		return exdrFILENOTFOUND;
 	result = xtc_header(xd,natoms,&step,&time,TRUE);
 	xdrfile_close(xd);
-	
+
 	return result;
 }
 
@@ -107,13 +107,13 @@ int read_xtc(XDRFILE *xd,
 /* Read subsequent frames */
 {
 	int result;
-  
+
 	if ((result = xtc_header(xd,&natoms,step,time,TRUE)) != exdrOK)
 		return result;
-	  
+
 	if ((result = xtc_coord(xd,&natoms,box,x,prec,1)) != exdrOK)
 		return result;
-  
+
 	return exdrOK;
 }
 
@@ -171,7 +171,7 @@ int read_xtc_numframes(char *fn, int *numframes, int64_t **offsets)
             return exdrENDOFFILE;
         }
         framebytes = (framebytes + 3) & ~0x03; //Rounding to the next 32-bit boundary
-        est_nframes = (int) (filesize/((int64_t) (framebytes+XTC_HEADER_SIZE)) + 1); // add one because it'd be easy to underestimate low frame numbers. 
+        est_nframes = (int) (filesize/((int64_t) (framebytes+XTC_HEADER_SIZE)) + 1); // add one because it'd be easy to underestimate low frame numbers.
         est_nframes += est_nframes/5;
 
         /* Allocate memory for the frame index array */
@@ -218,13 +218,13 @@ int write_xtc(XDRFILE *xd,
 /* Write a frame to xtc file */
 {
 	int result;
-  
+
 	if ((result = xtc_header(xd,&natoms,&step,&time,FALSE)) != exdrOK)
 		return result;
 
 	if ((result = xtc_coord(xd,&natoms,box,x,&prec,0)) != exdrOK)
 		return result;
-  
+
 	return exdrOK;
 }
 

@@ -1,5 +1,5 @@
 /* -*- C -*-  (not really, but good for syntax highlighting) */
-/* SWIG interface for Gromacs libxdrfile2 with the XTC and TRR code 
+/* SWIG interface for Gromacs libxdrfile2 with the XTC and TRR code
    Copyright (c) 2010 Oliver Beckstein <orbeckst@gmail.com>
    Copyright (c) 2013,2014 Manuel Melo <manuel.nuno.melo@gmail.com>
    Published under the GNU GENERAL PUBLIC LICENSE Version 2 (or higher)
@@ -57,7 +57,7 @@ In the example we read coordinate frames from an existing XTC trajectory::
   import numpy as np
   from libxdrfile2 import xdrfile_open, xdrfile_close, read_xtc_natoms, read_xtc, DIM, exdrOK
   xtc = 'md.xtc'
-  
+
   # get number of atoms
   natoms = read_xtc_natoms(xtc)
 
@@ -109,7 +109,7 @@ A number of symbols are exported; they all start with the letters
           Success of xdr file read/write operation.
 
 .. data:: exdrCLOSE
- 
+
           xdr file is closed
 
 .. data:: exdrENDOFFILE
@@ -157,7 +157,7 @@ Other symbols that are used internally are:
 
 .. data:: exdrNOMEM
 
-          not enough memory to allocate space for a XDR data structure.      
+          not enough memory to allocate space for a XDR data structure.
 
 Opening and closing of XDR files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,9 +179,9 @@ to access xdr files such as XTC or TRR trajectories.
 
 .. function:: xdrfile_close(XDRFILE) -> status
 
-              Close the xdrfile pointed to by *XDRFILE*. 
+              Close the xdrfile pointed to by *XDRFILE*.
 
-              .. Warning:: Closing an already closed file will lead to a 
+              .. Warning:: Closing an already closed file will lead to a
                            crash with a double-free pointer error.
 
 XTC functions
@@ -204,15 +204,15 @@ The advantage of XTC over TRR is its significantly reduced size.
                 *fn*
                    file name of an xtc file
 
-              :Raises: :exc:`IOError` if the supplied filed is not a XTC 
+              :Raises: :exc:`IOError` if the supplied filed is not a XTC
                        or if it is not readable.
 
 .. function:: read_xtc_numframes(fn) -> (numframes, offsets)
 
-              Read through the whole trajectory headers to obtain the total number of frames. 
+              Read through the whole trajectory headers to obtain the total number of frames.
               The process is speeded up by reading frame headers for the amount of data in the frame,
               and then skipping directly to the next header. An array of frame offsets is also
-              returned, which can later be used to seek direcly to arbitrary frames in the trajectory. 
+              returned, which can later be used to seek direcly to arbitrary frames in the trajectory.
 
               :Arguments:
                 *fn*
@@ -225,7 +225,7 @@ The advantage of XTC over TRR is its significantly reduced size.
                   *offsets*
                      a numpy array of int64 recording the starting byte offset of each frame
 
-              :Raises: :exc:`IOError` if the supplied filed is not a XTC 
+              :Raises: :exc:`IOError` if the supplied filed is not a XTC
                        or if it is not readable.
 
 .. function:: read_xtc(XDRFILE, box, x) -> (status, step, time, precision)
@@ -266,7 +266,7 @@ The advantage of XTC over TRR is its significantly reduced size.
                 *time*
                    time step in ps
                 *box*
-                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains 
+                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains
                    the unit cell box vectors
                 *x*
                    numpy ``array((natoms, DIM),dtype=nump.float32)``
@@ -274,14 +274,14 @@ The advantage of XTC over TRR is its significantly reduced size.
                 *precision*
                    precision of the lossy xtc format (typically 1000.0)
 
-              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*`` 
+              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*``
                         constants under `Status symbols`_ for other values)
 
 TRR functions
 ~~~~~~~~~~~~~
 
-TRR is the Gromacs_ native full-feature trajectory storage format. It can contain position 
-coordinates, velocities and forces, and the lambda value for free energy perturbation 
+TRR is the Gromacs_ native full-feature trajectory storage format. It can contain position
+coordinates, velocities and forces, and the lambda value for free energy perturbation
 calculations. Velocities and forces are optional in the sense that they can be all zero.
 
 .. function:: read_trr_natoms(fn) -> natoms
@@ -297,10 +297,10 @@ calculations. Velocities and forces are optional in the sense that they can be a
 
 .. function:: read_trr_numframes(fn) -> (numframes, offsets)
 
-              Read through the whole trajectory headers to obtain the total number of frames. 
+              Read through the whole trajectory headers to obtain the total number of frames.
               The process is speeded up by reading frame headers for the amount of data in the frame,
               and then skipping directly to the next header. An array of frame offsets is also
-              returned, which can later be used to seek direcly to arbitrary frames in the trajectory. 
+              returned, which can later be used to seek direcly to arbitrary frames in the trajectory.
 
               :Arguments:
                 *fn*
@@ -338,7 +338,7 @@ calculations. Velocities and forces are optional in the sense that they can be a
               :Returns:
                 a tuple containing:
                   *status*
-                     integer status (0 = exdrOK), see the ``libxdrfile2.exdr*`` constants 
+                     integer status (0 = exdrOK), see the ``libxdrfile2.exdr*`` constants
                      under `Status symbols`_ for other values)
                   *step*
                      simulation step
@@ -367,7 +367,7 @@ calculations. Velocities and forces are optional in the sense that they can be a
                 *lambda*
                    free energy lambda value (typically 0.0)
                 *box*
-                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains 
+                   numpy ``array((DIM,DIM),dtype=numpy.float32)`` which contains
                    the unit cell box vectors
                 *x*
                    numpy ``array((natoms, DIM),dtype=nump.float32)``
@@ -383,8 +383,8 @@ calculations. Velocities and forces are optional in the sense that they can be a
                    either one of *x*, *v*, or *f* can now be set as a natom,0-DIM
                    numpy ``array((natom, 0),dtype=nump.float32)``. This will cause the
                    corresponding property to be skipped when writing to file.
- 
-              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*`` 
+
+              :Returns: *status*, integer status (0 = OK), see the ``libxdrfile2.exdr*``
                         constants under `Status symbols`_ for other values)
 
 "
@@ -413,7 +413,7 @@ import_array();
 %}
 
 
-/* From Gromacs xdrfile.c 
+/* From Gromacs xdrfile.c
 
    I am only wrapping 'high level' functions and modify call
    signatures so that one does not need anything like pointers from
@@ -422,7 +422,7 @@ import_array();
 
 
 /* status codes */
-enum { exdrOK, exdrHEADER, exdrSTRING, exdrDOUBLE, 
+enum { exdrOK, exdrHEADER, exdrSTRING, exdrDOUBLE,
        exdrINT, exdrFLOAT, exdrUINT, exdr3DX, exdrCLOSE, exdrMAGIC,
        exdrNOMEM, exdrENDOFFILE, exdrFILENOTFOUND, exdrNR };
 
@@ -488,7 +488,7 @@ PyObject * my_read_xtc_numframes(char *fn) {
     }
     /* From http://web.archive.org/web/20130304224839/http://blog.enthought.com/python/numpy/simplified-creation-of-numpy-arrays-from-pre-allocated-memory/ */
     PyArray_BASE(npoffsets) = PyCObject_FromVoidPtr(*offsets, free);
-    PyObject *tuple = PyTuple_New(2); 
+    PyObject *tuple = PyTuple_New(2);
     PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong((long)numframes));
     PyTuple_SET_ITEM(tuple, 1, npoffsets);
     return tuple;
@@ -496,9 +496,9 @@ PyObject * my_read_xtc_numframes(char *fn) {
 %}
 
 
-/* This function returns the number of atoms in the trr file in *natoms 
+/* This function returns the number of atoms in the trr file in *natoms
      extern int read_trr_natoms(char *fn,int *natoms);
- ... but the wrapped function returns natoms as the python return value 
+ ... but the wrapped function returns natoms as the python return value
 */
 %feature("autodoc", "0") my_read_trr_natoms;
 %rename (read_trr_natoms) my_read_trr_natoms;
@@ -547,14 +547,14 @@ PyObject * my_read_trr_numframes(char *fn) {
     }
     /* From http://web.archive.org/web/20130304224839/http://blog.enthought.com/python/numpy/simplified-creation-of-numpy-arrays-from-pre-allocated-memory/ */
     PyArray_BASE(npoffsets) = PyCObject_FromVoidPtr(*offsets, free);
-    PyObject *tuple = PyTuple_New(2); 
+    PyObject *tuple = PyTuple_New(2);
     PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong((long)numframes));
     PyTuple_SET_ITEM(tuple, 1, npoffsets);
     return tuple;
   }
 %}
 
-  
+
 
 #define DIM 3
 typedef float matrix[DIM][DIM];
@@ -571,7 +571,7 @@ typedef float rvec[DIM];
 /* Read one frame of an open xtc file */
 /*
 extern int read_xtc(XDRFILE *xd,int natoms,int *step,float *time,
- 		    matrix box,rvec *x,float *prec); 
+ 		    matrix box,rvec *x,float *prec);
 */
 %feature("autodoc", "read_xtc(XDRFILE, box, x) -> (status, step, time, precision)") my_read_xtc;
 %rename (read_xtc) my_read_xtc;
@@ -580,7 +580,7 @@ PyObject * my_read_xtc(XDRFILE *xd, matrix box, int natoms, int _DIM, float *x) 
   /* _DIM = 3 always, need to reorder for numpy.i SWIG */
   int status, step;
   float time, prec;
-  PyObject *tuple = PyTuple_New(4); 
+  PyObject *tuple = PyTuple_New(4);
   status = read_xtc(xd, natoms, &step, &time, box, (rvec *)x, &prec);
   PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong((long)status));
   PyTuple_SET_ITEM(tuple, 1, PyInt_FromLong((long)step));
@@ -593,14 +593,14 @@ PyObject * my_read_xtc(XDRFILE *xd, matrix box, int natoms, int _DIM, float *x) 
 %feature("autodoc", "read_trr(XDRFILE, box, x, v, f) -> (status, step, time, lambda)") my_read_trr;
 %rename (read_trr) my_read_trr;
 %inline %{
-PyObject * my_read_trr(XDRFILE *xd, matrix box, 
+PyObject * my_read_trr(XDRFILE *xd, matrix box,
 		int natoms,  int _DIM,  float *x,
 		int vnatoms, int v_DIM, float *v,
 		int fnatoms, int f_DIM, float *f) {
   /* _DIM = 3 always, need to reorder for numpy.i SWIG */
   int status, step, has_prop=0;
   float time, lmbda;
-  PyObject *tuple = PyTuple_New(7); 
+  PyObject *tuple = PyTuple_New(7);
   status = read_trr(xd, natoms, &step, &time, &lmbda, box, (rvec *)x, (rvec *)v, (rvec *)f, &has_prop);
   PyTuple_SET_ITEM(tuple, 0, PyInt_FromLong((long)status));
   PyTuple_SET_ITEM(tuple, 1, PyInt_FromLong((long)step));
@@ -625,7 +625,7 @@ PyObject * my_read_trr(XDRFILE *xd, matrix box,
 %apply (int DIM1, int DIM2, float* IN_ARRAY2) {(int natoms,  int _DIM,  float *x),
                                                (int vnatoms, int v_DIM, float *v),
                                                (int fnatoms, int f_DIM, float *f)}
-  
+
 /* Write a frame to xtc file */
 /*
 extern int write_xtc(XDRFILE *xd, int natoms,int step,float time,
@@ -644,10 +644,10 @@ int my_write_xtc(XDRFILE *xd, int step, float time,
 %feature("autodoc", "write_trr(XDRFILE, step, time, lambda, box, x, v, f) -> status") my_write_trr;
 %rename (write_trr) my_write_trr;
 %inline %{
-int my_write_trr(XDRFILE *xd, int step, float time, float lmbda, matrix box, 
-		 int natoms,  int _DIM,  float *x, 
-		 int vnatoms, int v_DIM, float *v, 
-		 int fnatoms, int f_DIM, float *f) { 
+int my_write_trr(XDRFILE *xd, int step, float time, float lmbda, matrix box,
+		 int natoms,  int _DIM,  float *x,
+		 int vnatoms, int v_DIM, float *v,
+		 int fnatoms, int f_DIM, float *f) {
   /* Preparing for the case of empty arrays - NULL pointers tell the library to skip this property. */
   if (_DIM == 0) x = NULL;
   if (v_DIM == 0) v = NULL;
