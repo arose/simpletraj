@@ -4,10 +4,17 @@ from __future__ import print_function
 
 import os
 import re
+import sys
 import array
 import collections
 import numpy as np
-import cPickle as pickle
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
+
+if sys.version_info > (3,):
+    long = int
 
 from .dcd import dcd as dcd
 import netCDF4 as netcdf
