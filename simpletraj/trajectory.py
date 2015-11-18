@@ -20,17 +20,17 @@ if sys.version_info > (3,):
 try:
     from .dcd import dcd as dcd
 except ImportError:
-    warnings.warn("dcd not available, some functions may not work!")
+    warnings.warn("dcd package not available, 'DcdTrajectory' will not work")
 
 try:
     import netCDF4 as netcdf
 except ImportError:
-    warnings.warn("netcdf not available, some functions may not work!")
+    warnings.warn("netcdf package not available, 'NetcdfTrajectory' will not work!")
 
 try:
     from .xdrfile import _libxdrfile2 as libxdrfile2
 except ImportError:
-    warnings.warn("libxdrfile2 not available, some functions may not work!")
+    warnings.warn("libxdrfile2 package not available, 'XtcTrajectory' and 'TrrTrajectory' will not work!")
 
 
 def get_xtc_parts( name, directory ):
