@@ -1,6 +1,6 @@
 
 
-Simple coordinate-only trajectory reader based on code from GROMACS, MDAnalysis and VMD.
+Lightweight coordinate-only trajectory reader based on code from [GROMACS](http://www.gromacs.org/), [MDAnalysis](http://www.mdanalysis.org/) and [VMD](http://www.ks.uiuc.edu/Research/vmd/).
 
 Used for coordinate retrieval in [MDSrv](https://github.com/arose/mdsrv) and [nglview](https://github.com/arose/nglview).
 
@@ -33,6 +33,21 @@ Finally install simpletraj itself:
 
     sudo python setup.py install
 
+
+Changelog
+=========
+
+Version 0.2dev
+--------------
+
+* WIP: preparing packaging
+* CODE: Python 3 compatibility
+
+
+Version 0.1
+-----------
+
+initial version (no release)
 
 
 License
