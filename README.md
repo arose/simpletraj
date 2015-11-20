@@ -42,6 +42,7 @@ Version 0.2dev
 
 * WIP: preparing packaging
 * CODE: Python 3 compatibility
+* CODE: handle errors during offsets file reading/writing
 
 
 Version 0.1
