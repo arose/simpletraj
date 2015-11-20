@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, Extension, find_packages
 
 
-VERSION = "0.2"
+VERSION = "0.3.dev0"
 CLASSIFIERS = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
@@ -120,7 +120,9 @@ if __name__ == '__main__':
                 include_dirs = [ get_numpy_include, "simpletraj/dcd/include" ],
             ),
         ],
+        requires = [ "numpy" ],
         setup_requires = [ "numpy" ],
+        install_requires = [ "numpy" ],
         extras_require = {
             "netcdf": [ "netCDF4" ]
         }

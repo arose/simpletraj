@@ -1,6 +1,5 @@
 global-include *.c
 global-include *.h
-include MDAnalysis/coordinates/xdrfile/src/*
-include LICENSE
+include LICENSE README.md
 include setup.py
 global-exclude *.pyc

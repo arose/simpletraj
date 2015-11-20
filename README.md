@@ -40,6 +40,12 @@ In case you get "ValueError: did not find HDF5 headers" try:
 Changelog
 =========
 
+Version 0.3dev
+--------------
+
+*
+
+
 Version 0.2
 -----------
 
