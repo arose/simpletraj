@@ -23,14 +23,10 @@ except ImportError:
     warnings.warn("dcd package not available, 'DcdTrajectory' will not work")
 
 try:
-    import netCDF4 as netcdf
-except ImportError:
-    warnings.warn("netcdf package not available, 'NetcdfTrajectory' will not work!")
-
-try:
     from .xdrfile import _libxdrfile2 as libxdrfile2
 except ImportError:
     warnings.warn("libxdrfile2 package not available, 'XtcTrajectory' and 'TrrTrajectory' will not work!")
+
 
 
 def get_xtc_parts( name, directory ):
@@ -296,6 +292,10 @@ class TrrTrajectory( XdrTrajectory ):
 
 class NetcdfTrajectory( Trajectory ):
     def __init__( self, file_name ):
+        try:
+            import netCDF4 as netcdf
+        except ImportError as e:
+            raise "'NetcdfTrajectory' requires the 'netCDF4' package"
         # http://ambermd.org/netcdf/nctraj.pdf
         self.file_name = file_name
         self.netcdf = netcdf.Dataset( self.file_name )

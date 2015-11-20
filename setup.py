@@ -37,7 +37,7 @@ if __name__ == '__main__':
         name = "simpletraj",
         author = "Alexander S. Rose",
         description = "Simple coordinate-only trajectory reader based on code from GROMACS, MDAnalysis, VMD.",
-        version = "0.1",
+        version = "0.2dev",
         license = "GPL2",
         url = "https://github.com/arose/simpletraj",
         packages = [ "simpletraj", "simpletraj.xdrfile", "simpletraj.dcd" ],
@@ -62,5 +62,7 @@ if __name__ == '__main__':
             ),
         ],
         setup_requires = [ "numpy" ],
-        # install_requires = [ "numpy", "netCDF4" ],
+        extras_require = {
+            "netcdf": [ "netCDF4" ]
+        }
     )
