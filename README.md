@@ -40,8 +40,8 @@ In case you get "ValueError: did not find HDF5 headers" try:
 Changelog
 =========
 
-Version 0.2dev
---------------
+Version 0.2
+-----------
 
 * ADD: package ready for PyPI
 * CODE: Python 3 compatibility
