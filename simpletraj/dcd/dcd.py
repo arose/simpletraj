@@ -16,6 +16,7 @@
 #     doi:10.1002/jcc.21787
 #
 
+from __future__ import absolute_import
 
 import os
 import errno
@@ -85,12 +86,12 @@ from . import _dcdmodule
 
 try:
     import new
-    DCDReader._read_dcd_header = new.instancemethod( _dcdmodule.__read_dcd_header, None, DCDReader )
-    DCDReader._read_next_frame = new.instancemethod( _dcdmodule.__read_next_frame, None, DCDReader )
-    DCDReader._jump_to_frame = new.instancemethod( _dcdmodule.__jump_to_frame, None, DCDReader )
-    DCDReader._reset_dcd_read = new.instancemethod( _dcdmodule.__reset_dcd_read, None, DCDReader )
-    DCDReader._finish_dcd_read = new.instancemethod( _dcdmodule.__finish_dcd_read, None, DCDReader )
-    DCDReader._read_timeseries = new.instancemethod( _dcdmodule.__read_timeseries, None, DCDReader )
+    DCDReader._read_dcd_header = new.instancemethod( _dcdmodule._read_dcd_header, None, DCDReader )
+    DCDReader._read_next_frame = new.instancemethod( _dcdmodule._read_next_frame, None, DCDReader )
+    DCDReader._jump_to_frame = new.instancemethod( _dcdmodule._jump_to_frame, None, DCDReader )
+    DCDReader._reset_dcd_read = new.instancemethod( _dcdmodule._reset_dcd_read, None, DCDReader )
+    DCDReader._finish_dcd_read = new.instancemethod( _dcdmodule._finish_dcd_read, None, DCDReader )
+    DCDReader._read_timeseries = new.instancemethod( _dcdmodule._read_timeseries, None, DCDReader )
     del( _dcdmodule )
 except ImportError:
     DCDReader._read_dcd_header = lambda self: _dcdmodule._read_dcd_header( self )

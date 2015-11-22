@@ -114,14 +114,12 @@ _write_dcd_header(PyObject *self, PyObject *args)
     return NULL;
   }
 
-  // if (!PyFile_CheckExact(temp)) {
-  //   // Raise exception
-  //   PyErr_SetString(PyExc_TypeError, "dcdfile does not refer to a file object");
-  //   Py_DECREF(temp);
-  //   return NULL;
-  // }
-  // fd = fileno(PyFile_AsFile(temp));
-  fio_open(PyUnicode_AsUTF8(temp),FIO_WRITE,&fd);
+  #if PY_MAJOR_VERSION < 3
+    fio_open(PyString_AsString(temp),FIO_WRITE,&fd);
+  #else
+    fio_open(PyUnicode_AsUTF8(temp),FIO_WRITE,&fd);
+  #endif
+
   // No longer need the reference to temp
   Py_DECREF(temp);
 
@@ -333,13 +331,12 @@ _read_dcd_header(PyObject *self, PyObject *args)
     return NULL;
   }
 
-  // if (!PyFile_CheckExact(temp)) {
-  //   // Raise exception
-  //   PyErr_SetString(PyExc_TypeError, "dcdfile does not refer to a file object");
-  //   goto error;
-  // }
-  // fd = fileno(PyFile_AsFile(temp));
-  fio_open(PyUnicode_AsUTF8(temp),FIO_READ,&fd);
+  #if PY_MAJOR_VERSION < 3
+    fio_open(PyString_AsString(temp),FIO_WRITE,&fd);
+  #else
+    fio_open(PyUnicode_AsUTF8(temp),FIO_WRITE,&fd);
+  #endif
+
   // No longer need the reference to temp
   Py_DECREF(temp);
 
