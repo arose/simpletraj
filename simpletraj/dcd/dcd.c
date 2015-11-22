@@ -115,7 +115,11 @@ _write_dcd_header(PyObject *self, PyObject *args)
   }
 
   #if PY_MAJOR_VERSION < 3
-    fio_open(PyString_AsString(temp),FIO_WRITE,&fd);
+    if (PyUnicode_Check(temp)) {
+        fio_open(PyString_AsString(PyUnicode_AsUTF8String(temp)),FIO_WRITE,&fd);
+    }else{
+      fio_open(PyString_AsString(temp),FIO_WRITE,&fd);
+    }
   #else
     fio_open(PyUnicode_AsUTF8(temp),FIO_WRITE,&fd);
   #endif
@@ -332,9 +336,13 @@ _read_dcd_header(PyObject *self, PyObject *args)
   }
 
   #if PY_MAJOR_VERSION < 3
-    fio_open(PyString_AsString(temp),FIO_WRITE,&fd);
+    if (PyUnicode_Check(temp)) {
+        fio_open(PyString_AsString(PyUnicode_AsUTF8String(temp)),FIO_READ,&fd);
+    }else{
+      fio_open(PyString_AsString(temp),FIO_READ,&fd);
+    }
   #else
-    fio_open(PyUnicode_AsUTF8(temp),FIO_WRITE,&fd);
+    fio_open(PyUnicode_AsUTF8(temp),FIO_READ,&fd);
   #endif
 
   // No longer need the reference to temp
@@ -859,13 +867,13 @@ _finish_dcd_read(PyObject *self, PyObject *args)
 
   if ( !PyObject_HasAttrString(self, "_dcd_C_ptr") ) {
     // Raise exception
-    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute");
+    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute1");
     return NULL;
   }
 
   if ((temp = PyObject_GetAttrString(self, "_dcd_C_ptr")) == NULL) { // This gives me a New Reference
     // Raise exception
-    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute");
+    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute2");
     return NULL;
   }
 
@@ -1010,13 +1018,13 @@ _reset_dcd_read(PyObject *self, PyObject *args)
 
   if ( !PyObject_HasAttrString(self, "_dcd_C_ptr") ) {
     // Raise exception
-    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute");
+    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute1");
     return NULL;
   }
 
   if ((temp = PyObject_GetAttrString(self, "_dcd_C_ptr")) == NULL) { // This gives me a New Reference
     // Raise exception
-    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute");
+    PyErr_SetString(PyExc_AttributeError, "_dcd_C_ptr is not an attribute2");
     return NULL;
   }
 

@@ -43,7 +43,7 @@ Changelog
 Version 0.3dev
 --------------
 
-*
+* FIX: DCD Python 2 compatibility
 
 
 Version 0.2
