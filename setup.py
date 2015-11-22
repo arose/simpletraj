@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, Extension, find_packages
 
 
-VERSION = "0.3.dev0"
+VERSION = "0.3"
 CLASSIFIERS = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
