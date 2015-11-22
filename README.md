@@ -17,6 +17,8 @@ From PyPI:
 netCDF4
 -------
 
+For reading `.netcdf` trajectory files the `netCDF4` package is needed. As installing it can prove difficult, it is not a required package and must be installed separately.
+
 If you use `conda` as your Python package manager:
 
     conda install netcdf4
