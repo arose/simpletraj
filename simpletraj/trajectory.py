@@ -224,16 +224,16 @@ class XdrTrajectory( Trajectory ):
         mtime_xdr = os.path.getmtime( self.file_name )
         create_offsets = True
         if not force and isfile_offset and mtime_offset >= mtime_xdr:
-            print( "found usable offsets file" )
+            # print( "found usable offsets file" )
             create_offsets = False
             try:
                 with open( self.offset_file, 'rb' ) as fp:
                     self.numframes, self.offsets = pickle.load( fp )
             except:
-                print( "error reading offsets file" )
+                # print( "error reading offsets file" )
                 create_offsets = True
         if create_offsets:
-            print( "create offsets file" )
+            # print( "create offsets file" )
             self.numframes, self.offsets = self._read_numframes(
                 self.file_name
             )
@@ -241,7 +241,8 @@ class XdrTrajectory( Trajectory ):
                 with open( self.offset_file, 'wb' ) as fp:
                     pickle.dump( ( self.numframes, self.offsets ), fp )
             except:
-                print( "error writing offsets file" )
+                pass
+                # print( "error writing offsets file" )
 
     def _get_frame( self, index ):
         libxdrfile2.xdr_seek(
