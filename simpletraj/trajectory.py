@@ -150,7 +150,7 @@ class Trajectory( object ):
             frames = range( size )
         path = np.zeros( ( size, 3 ), dtype=np.float32 )
         for i in frames:
-            box, coords = self._get_frame( i )
+            box, coords, time = self._get_frame( i )
             path[ i ] = coords[ atom_index ]
         return path
 
