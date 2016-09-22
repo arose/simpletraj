@@ -46,7 +46,10 @@ def get_split_xtc( directory ):
         m = re.match( pattern, f )
         if( m ):
             split[ "@" + m.group(1) + "." + m.group(2) ] += 1
-    return sorted( [ k for k, v in split.iteritems() if v > 1 ] )
+    if sys.version_info[0] > (3,):
+        return sorted( [ k for k, v in split.items() if v > 1 ] )
+    else:
+        return sorted( [ k for k, v in split.iteritems() if v > 1 ] )
 
 
 def get_trajectory( file_name ):
