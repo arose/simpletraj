@@ -42,8 +42,8 @@ In case you get "ValueError: did not find HDF5 headers" try:
 Changelog
 =========
 
-Version 0.4
------------
+Version 0.4 and 0.5
+-------------------
 
 * FIX: Python 3 compatibility (iter/iteritems)
 
